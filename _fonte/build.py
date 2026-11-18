@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Gera o site estático. Uso: python3 build.py https://www.seudominio.com.br"""
 import sys,os,json,shutil
-SITE=(sys.argv[1] if len(sys.argv)>1 else "https://www.felipegoulart.dev.br").rstrip('/')
-NOME="Felipe Goulart"; WA="https://wa.me/5547991237643"; FONE="(47) 99123-7643"; MAIL="contato@FelipeGolart.dev.br"
+SITE=(sys.argv[1] if len(sys.argv)>1 else "https://felipegoulart.dev.br").rstrip('/')
+NOME="Felipe Goulart"; WA="https://wa.me/5547991237643"; FONE="(47) 99123-7643"; MAIL="contato@felipegoulart.dev.br"
 HOJE="2026-11-18"; OUT="dist"
+BL="https://felipegoulart.vercel.app"
 if os.path.exists(OUT): shutil.rmtree(OUT)
 os.makedirs(OUT+"/img")
 for f in os.listdir("img"): shutil.copy("img/"+f,OUT+"/img/"+f)
 shutil.copy("img/logo-felipe-goulart.jpg",OUT+"/favicon.jpg")
+shutil.copy("img/logo-felipe-goulart.png",OUT+"/favicon.png")
 def wa(t): 
     from urllib.parse import quote
     return WA+"?text="+quote(t)
@@ -35,11 +37,13 @@ details{border:1px solid var(--ln);border-radius:8px;padding:10px 14px;margin:8p
 footer{border-top:1px solid var(--ln);background:var(--so);font-size:15px}footer .w{padding-top:24px;padding-bottom:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}footer ul{list-style:none;padding:0;margin:0}footer li a{display:inline-block;padding:4px 0}
 @media(max-width:600px){body{font-size:16px}.btn{display:block;text-align:center;margin-right:0}}
 a,td,li{overflow-wrap:anywhere}
+.fs{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin:18px 0}.fs figure{margin:0}.fs img{display:block;border-radius:12px;border:1px solid var(--ln)}.fs .ph img{border-radius:50%;width:150px;height:150px;object-fit:cover}.fs .sp img{background:#000;width:240px}.fs figcaption{font-size:13px;color:var(--mu);padding-top:6px;text-align:center}
+.bl{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.bl li{border:1px solid var(--ln);border-radius:10px;padding:12px 14px;background:var(--so)}.bl strong{display:block}.bl span{font-size:14px;color:var(--mu)}
 """
 JS="""(function(){var o={passive:false};['gesturestart','gesturechange','gestureend'].forEach(function(n){document.addEventListener(n,function(e){e.preventDefault()},o)});document.addEventListener('touchmove',function(e){if(e.touches&&e.touches.length>1)e.preventDefault()},o)})();"""
 open(OUT+"/style.css","w").write(CSS.strip())
 NAV=[("/","Início"),("/servicos/","Serviços"),("/sobre/","Sobre"),("/projetos/","Projetos"),("/permuta/","Permuta"),("/contato/","Contato")]
-ORG={"@type":"ProfessionalService","@id":SITE+"/#negocio","name":"Felipe Goulart – Desenvolvimento de Sites e Sistemas","url":SITE+"/","image":SITE+"/img/logo-felipe-goulart.jpg","telephone":"+55-47-99123-7643","email":MAIL,
+ORG={"@type":"ProfessionalService","@id":SITE+"/#negocio","name":"Felipe Goulart - Desenvolvimento de Websites & Sistemas","url":SITE+"/","image":SITE+"/img/logo-felipe-goulart.jpg","telephone":"+55-47-99123-7643","email":MAIL,
  "address":{"@type":"PostalAddress","addressLocality":"Balneário Camboriú","addressRegion":"SC","addressCountry":"BR"},"areaServed":[{"@type":"City","name":"Balneário Camboriú"},{"@type":"Country","name":"Brasil"}],
  "founder":{"@type":"Person","name":NOME,"jobTitle":"Desenvolvedor de software"}}
 sitemap=[]
@@ -58,17 +62,17 @@ def page(path,title,desc,h1,body,crumbs=None,extra=None,prio="0.7"):
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>{title}</title><meta name="description" content="{desc}">
 <link rel="canonical" href="{url}"><meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#0b6b3a"><link rel="icon" href="/favicon.jpg" type="image/jpeg"><link rel="apple-touch-icon" href="/favicon.jpg">
-<meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="Felipe Goulart"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{url}"><meta property="og:image" content="{SITE}/img/logo-felipe-goulart.jpg">
+<meta name="theme-color" content="#0b6b3a"><link rel="icon" href="/favicon.png" type="image/png"><link rel="apple-touch-icon" href="/favicon.jpg">
+<meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="Felipe Goulart"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{url}"><meta property="og:image" content="{SITE}/img/felipe-smartplanet.jpg">
 <meta name="twitter:card" content="summary">
 <link rel="stylesheet" href="/style.css">
 {"".join('<script type="application/ld+json">'+json.dumps(x,ensure_ascii=False)+'</script>' for x in ld)}
 </head><body>
-<header><div class="w"><a class="lg" href="/"><img src="/img/logo-felipe-goulart.jpg" alt="Logotipo de Felipe Goulart" width="44" height="44">Felipe Goulart</a><nav aria-label="Principal"><ul>{nav}</ul></nav></div></header>
+<header><div class="w"><a class="lg" href="/"><img src="/img/logo-felipe-goulart.png" alt="Logotipo de Felipe Goulart" width="44" height="44">Felipe Goulart</a><nav aria-label="Principal"><ul>{nav}</ul></nav></div></header>
 <main class="w">{bc}<h1>{h1}</h1>{body}</main>
 <footer><div class="w"><div><strong>Felipe Goulart</strong><p>Desenvolvimento de sites, sistemas, ERP e PDV em Balneário Camboriú – SC, com atendimento em todo o Brasil.</p></div>
 <div><strong>Serviços</strong><ul>{"".join(f'<li><a href="/servicos/{s[0]}/">{s[1]}</a></li>' for s in SERV)}</ul></div>
-<div><strong>Contato</strong><ul><li><a href="{WA}">WhatsApp {FONE}</a></li><li><a href="mailto:{MAIL}">{MAIL}</a></li><li>Balneário Camboriú – SC</li></ul></div></div></footer>
+<div><strong>Contato</strong><ul><li><a href="{WA}">WhatsApp {FONE}</a></li><li><a href="mailto:{MAIL}">{MAIL}</a></li><li>Balneário Camboriú – SC</li><li><a href="{BL}" rel="noopener">felipegoulart.vercel.app</a></li></ul></div></div></footer>
 <script>{JS}</script></body></html>'''
     d=OUT+path; os.makedirs(d,exist_ok=True); open(d+"index.html","w",encoding="utf-8").write(html)
     sitemap.append((url,prio))
@@ -102,17 +106,24 @@ SERV=[
  [("O suporte é presencial?","Atendo presencialmente em Balneário Camboriú e região e à distância para o resto do Brasil."),("Vendem equipamentos?","Indico e configuro impressoras térmicas, etiquetadoras, leitores e coletores.")]),
 ]
 def faq(fs): return "<h2>Perguntas frequentes</h2>"+"".join(f"<details><summary>{q}</summary><p>{a}</p></details>" for q,a in fs)
-LOGOS=[("transporte-executivo","Transporte Executivo"),("e-transporte-pro","E-Transporte.PRÓ"),("luxury-drive-experience","Luxury Drive Experience"),("transfer-executivo-turismo-florianopolis","Transfer Executivo & Turismo – Florianópolis"),("hotel-blumenau","Hotel Blumenau"),("firestep","Firestep"),("vestmais-mara-moda-hospitalar","Vestmais Mara – Moda Hospitalar")]
+LOGOS=[("transporte-executivo","Transporte Executivo"),("e-transporte-pro","E-Transporte.PRÓ"),("luxury-drive-experience","Luxury Drive Experience"),("transfer-turismo-floripa","Transfer & Turismo – Floripa"),("hotel-blumenau","Hotel Blumenau"),("firestep","Firestep"),("smartplanet","SmartPlanet – a Boutique do Celular"),("vestmais-mara-moda-hospitalar","Vestmais Mara – Moda Hospitalar")]
 def logos(n=99): return '<ul class="lo">'+"".join(f'<li><figure><img src="/img/{s}.jpg" alt="Logotipo {t}" width="480" height="270" loading="lazy" decoding="async"><figcaption>{t}</figcaption></figure></li>' for s,t in LOGOS[:n])+'</ul>'
+
+
+FELIPE_SP=f'''<div class="fs"><figure class="ph"><img src="/img/felipe-goulart.jpg" alt="Foto de Felipe Goulart, desenvolvedor da SmartPlanet" width="150" height="150" loading="lazy" decoding="async"><figcaption>Felipe Goulart</figcaption></figure><figure class="sp"><img src="/img/logo-smartplanet.jpg" alt="Logotipo SmartPlanet – a Boutique do Celular" width="240" height="153" loading="lazy" decoding="async"><figcaption>SmartPlanet – a Boutique do Celular</figcaption></figure></div>'''
+BL_SITES=[("Transporte Executivo","https://www.transporteexecutivo.com","Site – crédito “Desenvolvido por Felipe Goulart” no rodapé"),("SmartPlanet – a Boutique do Celular","https://www.lojadeeletronicossaojose.com.br","Loja virtual – link “Site por Felipe Goulart” no rodapé"),("Hotel Blumenau","https://www.hotelblumenau.com.br","Site com reserva online – crédito no rodapé"),("API-Construtor.PRÓ","https://www.api-construtor.pro","Plataforma de automação – crédito do desenvolvedor"),("Firestep – Sites e CRM","https://www.firestep.cloud","Site e CRM – crédito do desenvolvedor")]
+def backlinks(): return '<h2>Onde encontrar o link do Felipe</h2><p>Nos sites que desenvolvi, o crédito do desenvolvedor leva para <a href="'+BL+'" rel="noopener">felipegoulart.vercel.app</a>.</p><ul class="bl">'+"".join(f'<li><strong><a href="{u}" rel="noopener">{n}</a></strong><span>{d} → <a href="{BL}" rel="noopener">felipegoulart.vercel.app</a></span></li>' for n,u,d in BL_SITES)+'</ul>'
 
 # HOME
 cards="".join(f'<li class="c"><h3><a href="/servicos/{s[0]}/">{s[1]}</a></h3><p>{s[5].split(".")[0]}.</p></li>' for s in SERV)
 page("/","Sites, Sistemas e PDV em Balneário Camboriú – Felipe Goulart","Desenvolvimento de sites, sistemas sob medida, ERP, PDV, automações e suporte de TI em Balneário Camboriú – SC. Atendimento em todo o Brasil.",
  "Desenvolvimento de sites, sistemas, ERP e PDV em Balneário Camboriú – SC",
  f'''<p class="lead">Sou Felipe Goulart, desenvolvedor de software em Balneário Camboriú – SC. Crio sites, sistemas de gestão (ERP), PDV e automações sob medida para empresas, e presto suporte de TI. Atendo em todo o Brasil.</p>{cta()}
+{FELIPE_SP}
 <h2>Serviços</h2><ul class="g">{cards}</ul>
 <h2>Por que sistema sob medida</h2><div class="tb"><table><tr><th></th><th>Sistema genérico</th><th>Sistema sob medida</th></tr><tr><td>Equipamentos</td><td>Só funciona com a lista de máquinas compatíveis.</td><td>Integração feita para a máquina que você já tem.</td></tr><tr><td>Processo</td><td>Você adapta a empresa ao sistema.</td><td>O sistema segue o seu processo.</td></tr><tr><td>Nota fiscal</td><td>Depende do que o fornecedor oferece.</td><td>Cupom ou nota emitidos direto do PDV, com integração à prefeitura.</td></tr></table></div>
-<h2>Empresas atendidas</h2>{logos(7)}<p><a href="/projetos/">Ver projetos e clientes</a></p>
+<h2>Empresas atendidas</h2>{logos()}<p><a href="/projetos/">Ver projetos e clientes</a></p>
+{backlinks()}
 <h2>Avaliações no Google</h2><blockquote>Parabéns pelo trabalho, desta vez foi apenas o site da Supercon, em breve fará outros serviços, um ótimo parceiro!<cite>Supercon Construtora</cite></blockquote><blockquote>Excelente profissional, sempre demonstra competência, responsabilidade e dedicação em tudo o que faz.<cite>Lucas N.</cite></blockquote>
 <h2>Pagamento por permuta</h2><p>Se a empresa não tem caixa agora, posso receber em produtos ou serviços. <a href="/permuta/">Veja como funciona a permuta</a>.</p>{cta("Falar com o Felipe")}''',prio="1.0")
 
@@ -128,7 +139,7 @@ for s in SERV:
      [("Serviços","/servicos/"),(nome,f"/servicos/{slug}/")],svc,"0.8")
 
 page("/sobre/","Sobre Felipe Goulart – Desenvolvedor em Balneário Camboriú","Felipe Goulart, desenvolvedor de software em Balneário Camboriú – SC. Tecnólogo em Gestão Financeira, estuda Engenharia de Software e atua há cerca de 4 anos.","Sobre Felipe Goulart",
- '<p class="lead">Tenho 24 anos, nasci em Pato Branco (PR) e moro em Balneário Camboriú – SC. Trabalho há cerca de 4 anos com desenvolvimento de software e serviços digitais.</p><p>Sou tecnólogo em Gestão Financeira e curso Engenharia de Software. A formação financeira ajuda a entender o processo da empresa antes de escrever o sistema.</p><h2>Tecnologias que uso</h2><p>GitHub, Supabase, Cursor e Google Business Profile, entre outras ferramentas de desenvolvimento, banco de dados e marketing local.</p>'+cta("Falar com o Felipe"),[("Sobre","/sobre/")],prio="0.6")
+ FELIPE_SP+'<p class="lead">Tenho 24 anos, nasci em Pato Branco (PR) e moro em Balneário Camboriú – SC. Trabalho há cerca de 4 anos com desenvolvimento de software e serviços digitais.</p><p>Sou tecnólogo em Gestão Financeira e curso Engenharia de Software. A formação financeira ajuda a entender o processo da empresa antes de escrever o sistema.</p><h2>Tecnologias que uso</h2><p>GitHub, Supabase, Cursor e Google Business Profile, entre outras ferramentas de desenvolvimento, banco de dados e marketing local.</p>'+cta("Falar com o Felipe"),[("Sobre","/sobre/")],prio="0.6")
 
 page("/projetos/","Projetos e Clientes – Felipe Goulart","Projetos de Felipe Goulart: sistemas de transporte, PDV, CRM, plataforma de automação e sites de hotel e varejo em Santa Catarina.","Projetos e clientes atendidos",
  f'''<p class="lead">Sistemas e sites que desenvolvi, com o endereço de cada um.</p>
@@ -141,7 +152,7 @@ page("/projetos/","Projetos e Clientes – Felipe Goulart","Projetos de Felipe G
 <tr><td>API-Construtor.PRÓ</td><td>Plataforma de fluxos de automação de mensagens</td><td><a href="https://www.api-construtor.pro" rel="noopener">www.api-construtor.pro</a></td></tr>
 <tr><td>FirestepCRM</td><td>CRM com agenda, clientes e financeiro</td><td>crm.firestep.cloud</td></tr>
 <tr><td>Firestep – Sites e CRM</td><td>Site com modelos prontos e CRM</td><td><a href="https://www.firestep.cloud" rel="noopener">www.firestep.cloud</a></td></tr></table></div>
-<h2>Clientes</h2>{logos()}{cta()}''',[("Projetos","/projetos/")],prio="0.7")
+<h2>Clientes</h2>{logos()}{backlinks()}{cta()}''',[("Projetos","/projetos/")],prio="0.7")
 
 page("/permuta/","Permuta: Site e Sistema em Troca de Produtos ou Serviços","Faço site, sistema, automação e suporte de TI e recebo em produtos ou serviços da sua empresa. Permuta com empresas de todo o Brasil.","Permuta: tecnologia em troca de produtos ou serviços",
  f'<p class="lead">Se a empresa não tem caixa agora, posso receber em produtos, serviços ou mercadoria para revenda, em vez de dinheiro.</p><h2>O que eu entrego</h2><ul><li>Site ou loja virtual</li><li>Sistema, ERP ou PDV</li><li>Automação e WhatsApp</li><li>Suporte de TI</li><li>Perfil no Google Maps e SEO local</li><li>Infraestrutura e redes</li></ul><h2>O que você pode oferecer</h2><ul><li>Produtos do estoque</li><li>Serviços da empresa</li><li>Mercadoria para revenda</li><li>Equipamentos</li><li>Veículos ou locação</li></ul><p>Conte o que a empresa tem e o valor aproximado. Se a conta não fechar, ajustamos ou deixamos para outro momento.</p><p><a class="btn" href="{wa("Olá, Felipe! Quero propor uma permuta. Minha empresa:")}">Propor permuta no WhatsApp</a></p>',[("Permuta","/permuta/")],prio="0.5")
@@ -152,7 +163,9 @@ page("/contato/","Contato – Felipe Goulart – Balneário Camboriú – SC","F
 open(OUT+"/404.html","w",encoding="utf-8").write('<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Página não encontrada – Felipe Goulart</title><link rel="stylesheet" href="/style.css"></head><body><main class="w"><h1>Página não encontrada</h1><p><a href="/">Voltar para o início</a> ou ver os <a href="/servicos/">serviços</a>.</p></main></body></html>')
 open(OUT+"/sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+"".join(f"<url><loc>{u}</loc><lastmod>{HOJE}</lastmod><priority>{p}</priority></url>\n" for u,p in sitemap)+"</urlset>")
 open(OUT+"/robots.txt","w").write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
-open(OUT+"/vercel.json","w").write(json.dumps({"cleanUrls":True,"trailingSlash":True,"headers":[
+from urllib.parse import urlparse
+HOST=urlparse(SITE).netloc
+open(OUT+"/vercel.json","w").write(json.dumps({"redirects":[{"source":"/(.*)","has":[{"type":"host","value":"www."+HOST}],"destination":SITE+"/$1","permanent":True}] if not HOST.startswith("www.") else [],"cleanUrls":True,"trailingSlash":True,"headers":[
  {"source":"/(.*)","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"X-Frame-Options","value":"SAMEORIGIN"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"},{"key":"Permissions-Policy","value":"camera=(), microphone=(), geolocation=()"}]},
  {"source":"/img/(.*)","headers":[{"key":"Cache-Control","value":"public, max-age=31536000, immutable"}]},
  {"source":"/style.css","headers":[{"key":"Cache-Control","value":"public, max-age=86400"}]}]},indent=2))

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.felipegoulart.dev.br/sitemap.xml
+Sitemap: https://www.goulartech.com.br/sitemap.xml
