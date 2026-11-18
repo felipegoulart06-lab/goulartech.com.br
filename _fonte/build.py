@@ -8,8 +8,8 @@ BL="https://felipegoulart.vercel.app"
 if os.path.exists(OUT): shutil.rmtree(OUT)
 os.makedirs(OUT+"/img")
 for f in os.listdir("img"): shutil.copy("img/"+f,OUT+"/img/"+f)
-shutil.copy("img/logo-felipe-goulart.jpg",OUT+"/favicon.jpg")
-shutil.copy("img/logo-felipe-goulart.png",OUT+"/favicon.png")
+shutil.copy("img/favicon-aguia.jpg",OUT+"/favicon.jpg")
+shutil.copy("img/favicon-aguia.png",OUT+"/favicon.png")
 def wa(t): 
     from urllib.parse import quote
     return WA+"?text="+quote(t)
@@ -119,7 +119,6 @@ cards="".join(f'<li class="c"><h3><a href="/servicos/{s[0]}/">{s[1]}</a></h3><p>
 page("/","Sites, Sistemas e PDV em Balneário Camboriú – Felipe Goulart","Desenvolvimento de sites, sistemas sob medida, ERP, PDV, automações e suporte de TI em Balneário Camboriú – SC. Atendimento em todo o Brasil.",
  "Desenvolvimento de sites, sistemas, ERP e PDV em Balneário Camboriú – SC",
  f'''<p class="lead">Sou Felipe Goulart, desenvolvedor de software em Balneário Camboriú – SC. Crio sites, sistemas de gestão (ERP), PDV e automações sob medida para empresas, e presto suporte de TI. Atendo em todo o Brasil.</p>{cta()}
-{FELIPE_SP}
 <h2>Serviços</h2><ul class="g">{cards}</ul>
 <h2>Por que sistema sob medida</h2><div class="tb"><table><tr><th></th><th>Sistema genérico</th><th>Sistema sob medida</th></tr><tr><td>Equipamentos</td><td>Só funciona com a lista de máquinas compatíveis.</td><td>Integração feita para a máquina que você já tem.</td></tr><tr><td>Processo</td><td>Você adapta a empresa ao sistema.</td><td>O sistema segue o seu processo.</td></tr><tr><td>Nota fiscal</td><td>Depende do que o fornecedor oferece.</td><td>Cupom ou nota emitidos direto do PDV, com integração à prefeitura.</td></tr></table></div>
 <h2>Empresas atendidas</h2>{logos()}<p><a href="/projetos/">Ver projetos e clientes</a></p>
